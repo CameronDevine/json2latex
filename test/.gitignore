@@ -1,0 +1,5 @@
+*.aux
+*.pdf
+*.log
+*.txt
+out.tex
