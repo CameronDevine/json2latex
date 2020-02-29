@@ -8,9 +8,13 @@ jobs:
   include:
     - python: '3.6'
       env: 'BLACK=1'
-install: >
-  mkdir texlive;
-  wget -O texlive/texlive_install.sh "https://raw.githubusercontent.com/PHPirates/travis-ci-latex-pdf/master/4-texlive/texlive/texlive_install.sh";
-  wget -O texlive/texlive.profile "https://raw.githubusercontent.com/PHPirates/travis-ci-latex-pdf/master/4-texlive/texlive/texlive.profile";
-  source ./texlive/texlive_install.sh;
+install:
+  - sudo apt-get -y install poppler-utils
+  - mkdir texlive;
+  - wget -O texlive/texlive_install.sh "https://raw.githubusercontent.com/PHPirates/travis-ci-latex-pdf/master/4-texlive/texlive/texlive_install.sh"
+  - wget -O texlive/texlive.profile "https://raw.githubusercontent.com/PHPirates/travis-ci-latex-pdf/master/4-texlive/texlive/texlive.profile"
+  - source ./texlive/texlive_install.sh;
 script: if [ "$BLACK" == 1 ]; then black --check .; else make test install_options:=""; fi
+addons:
+  apt:
+    update: true
