@@ -8,7 +8,9 @@ jobs:
   include:
     - python: '3.6'
       env: 'BLACK=1'
-install:
-  - wget "https://raw.githubusercontent.com/PHPirates/travis-ci-latex-pdf/master/4-texlive/texlive/texlive_install.sh"
-  - source ./texlive_install.sh
+install: >
+  mkdir texlive
+  wget -O texlive/texlive_install.sh "https://raw.githubusercontent.com/PHPirates/travis-ci-latex-pdf/master/4-texlive/texlive/texlive_install.sh"
+  wget -O texlive/texlive.profile "https://raw.githubusercontent.com/PHPirates/travis-ci-latex-pdf/master/4-texlive/texlive/texlive.profile"
+  source ./texlive/texlive_install.sh
 script: if [ "$BLACK" == 1 ]; then black --check .; else make test; fi
