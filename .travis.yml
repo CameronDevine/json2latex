@@ -1,0 +1,14 @@
+language: python
+python:
+  - '3.5'
+  - '3.6'
+  - '3.7'
+  - '3.8'
+jobs:
+  include:
+    - python: '3.6'
+      env: 'BLACK=1'
+install:
+  wget "https://raw.githubusercontent.com/PHPirates/travis-ci-latex-pdf/master/4-texlive/texlive/texlive_install.sh"
+  source ./texlive_install.sh
+script: if [ "$BLACK" == 1 ]; then black --check .; else make test; fi

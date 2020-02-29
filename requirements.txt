@@ -1,0 +1,4 @@
+roman
+black
+sphinx_rtd_theme
+sphinx
