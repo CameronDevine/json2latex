@@ -1,5 +1,7 @@
 .PHONY: test clean format all docs dist upload upload-test
 
+install_options = "--user"
+
 all: format test
 
 docs:
@@ -9,7 +11,7 @@ format:
 	black .
 
 install:
-	python setup.py install --user
+	python setup.py install $(install_options)
 
 test: install
 	json2latex test/test.json data test/out.tex
