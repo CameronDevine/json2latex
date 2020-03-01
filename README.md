@@ -26,6 +26,7 @@ data = dict(a="test", b=[1, 2])
 
 with open('out.tex', 'w') as f:
     json2latex.dump('data', data, f)
+```
 
 The same result can be accomplished by running,
 
