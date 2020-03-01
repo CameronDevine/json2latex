@@ -5,7 +5,7 @@ with open("README.md") as f:
 
 setup(
     name="json2latex",
-    version="0.0.1",
+    version="0.0.2",
     author="Cameron Devine",
     author_email="camdev@uw.edu",
     description="A package for converting JSON and other similar structures to a format accessible using LaTeX.",
