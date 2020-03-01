@@ -1,6 +1,5 @@
 language: python
 python:
-  - '3.5'
   - '3.6'
   - '3.7'
   - '3.8'
@@ -10,6 +9,7 @@ jobs:
       env: 'BLACK=1'
 install:
   - sudo apt-get -y install poppler-utils
+  - pip install -r requirements.txt
   - mkdir texlive;
   - wget -O texlive/texlive_install.sh "https://raw.githubusercontent.com/PHPirates/travis-ci-latex-pdf/master/4-texlive/texlive/texlive_install.sh"
   - wget -O texlive/texlive.profile "https://raw.githubusercontent.com/PHPirates/travis-ci-latex-pdf/master/4-texlive/texlive/texlive.profile"
