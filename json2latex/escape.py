@@ -17,6 +17,7 @@ _replacements = {
 }
 _replacement_lookup = str.maketrans(_replacements)
 
+
 def escape(string):
     """
     Replace special characters with their equivalent LaTeX macros.
