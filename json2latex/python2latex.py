@@ -7,7 +7,7 @@ __all__ = ["python2latex"]
 
 
 class python2latex:
-    """    A class for converting a nested Python structure into a form accessible using
+    """A class for converting a nested Python structure into a form accessible using
     LaTeX.
     """
 
