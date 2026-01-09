@@ -79,7 +79,7 @@ class python2latex:
         self._tex += "\\ifnum\\pdfstrcmp{#1}{all}=0%"
         self._nl(2)
 
-        self._def_out(ind, json.dumps(obj))
+        self._def_out(ind, json.dumps(obj,indent=2))
 
         self._nl(1)
         self._tex += "\\else%"
@@ -158,25 +158,18 @@ class python2latex:
             ind (int): The index of the ouput macro to set.
             value (Union[str, int, float, bool]): The vale to set the macro to.
         """
-        # Convert Python object to compact JSON string (no extra spaces)
-        compact_json = json.dumps(value, separators=(",", ":"))
-        compact_json = compact_json.replace(r'\"', '"')
-        print("compact json is ",compact_json)
-
-        # Split JSON by top-level commas for readability
-        # Note: this does not change actual JSON semantics
-        parts = escape(compact_json).split(",")
 
         # Start macro
         self._tex += "\\def" + self._out_macro_name(ind) + "{%"
 
         # Add each part on a separate line with '%' to prevent TeX from
         # introducing spaces
+        parts = str(value).splitlines()
         for i, part in enumerate(parts):
             self._nl(indent=2)
-            self._tex += part
+            self._tex += escape(part)
             if i < len(parts) - 1:
-                self._tex += ",%"
+                self._tex += "%"
 
         # Close macro
         self._tex += "}%"
