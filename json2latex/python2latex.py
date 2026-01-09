@@ -43,12 +43,20 @@ class python2latex:
         Args:
             obj (dict or list): The Python object to make accessible in LaTeX.
         """
-        self._tex += "\\makeatletter"
+        self._tex += "\\makeatletter\n"
         self._to_convert = {0: obj}
         self._index = 1
         while len(self._to_convert):
             self._convert()
-        self._tex += "\\makeatother"
+        self._tex += "\n\\makeatother"
+
+    def _nl(self, indent=0):
+        """Add newline.
+
+        Args:
+            indent (int): number of times to indent the next line after the newline, default 0.
+        """
+        self._tex += "\n" + ("  " * indent)
 
     def _convert(self):
         """Converts a subset of object.
@@ -61,19 +69,34 @@ class python2latex:
         """
         ind = list(self._to_convert.keys())[0]
         obj = self._to_convert.pop(ind)
+
         self._tex += (
             "\\newcommand"
             + self._macro_name(ind)
-            + "[1][all]{\\ifnum\\pdfstrcmp{#1}{all}=0"
+            + "[1][all]{%"
         )
+        self._nl(1)
+        self._tex += "\\ifnum\\pdfstrcmp{#1}{all}=0%"
+        self._nl(2)
+
         self._def_out(ind, json.dumps(obj))
-        self._tex += "\\else"
+
+        self._nl(1)
+        self._tex += "\\else%"
+        self._nl(2)
+
         if isinstance(obj, list):
             iterator = enumerate(obj)
         elif isinstance(obj, dict):
             iterator = obj.items()
         self._add_options(ind, iterator)
-        self._tex += "\\fi" + self._out_macro_name(ind) + "}"
+
+        self._nl(1)
+        self._tex += "\\fi%"
+        self._nl(1)
+        self._tex += self._out_macro_name(ind)
+        self._nl()
+        self._tex += "}"
 
     def _add_options(self, ind, iterator):
         """Adds a set of elements to the current command.
@@ -86,16 +109,28 @@ class python2latex:
         levels = 0
         for name, value in iterator:
             levels += 1
-            self._tex += "\\ifnum\\pdfstrcmp{#1}{" + str(name) + "}=0"
+            self._tex += (
+                "\\ifnum\\pdfstrcmp{#1}{"
+                + str(name)
+                + "}=0%"
+            )
+            self._nl(3)
+
             if isinstance(value, (list, dict)):
                 self._let_out(ind, self._index)
                 self._to_convert.update({self._index: value})
                 self._index += 1
             else:
                 self._def_out(ind, value)
-            self._tex += "\\else"
+
+            self._nl(2)
+            self._tex += "\\else%"
+            self._nl(3)
+
         self._def_out(ind, "??")
-        self._tex += levels * "\\fi"
+        self._nl(2)
+
+        self._tex += levels * "\\fi%"
 
     def _macro_name(self, ind):
         """Returns the name of a relay macro.
@@ -124,7 +159,11 @@ class python2latex:
             value (Union[str, int, float, bool]): The vale to set the macro to.
         """
         self._tex += (
-            "\\def" + self._out_macro_name(ind) + "{" + escape(str(value)) + "}"
+            "\\def"
+            + self._out_macro_name(ind)
+            + "{"
+            + escape(str(value))
+            + "}%"
         )
 
     def _let_out(self, ind, relay):
@@ -134,7 +173,12 @@ class python2latex:
             ind (int): The index of the output macro to set.
             relay (int): The index of the macro to return.
         """
-        self._tex += "\\let" + self._out_macro_name(ind) + self._macro_name(relay)
+        self._tex += (
+            "\\let"
+            + self._out_macro_name(ind)
+            + self._macro_name(relay)
+            + "%"
+        )
 
     def dump(self):
         """Get the string of LaTeX commands.
