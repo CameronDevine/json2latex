@@ -11,10 +11,10 @@ format:
 	black .
 
 install:
-	python setup.py install $(install_options)
+	pip install -e .
 
 test: install
-	json2latex test/test.json data test/out.tex
+	python scripts/json2latex test/test.json data test/out.tex
 	cd test; pdflatex test.tex
 	pdftotext test/test.pdf test/test.txt
 	cd test; python test.py
