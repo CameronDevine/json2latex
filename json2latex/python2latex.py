@@ -92,7 +92,7 @@ class python2latex:
         self._add_options(ind, iterator)
 
         self._nl(1)
-        self._tex += "\\fi%"
+        self._tex += "\\fi"
         self._nl(1)
         self._tex += self._out_macro_name(ind)
         self._nl()
@@ -130,7 +130,7 @@ class python2latex:
         self._def_out(ind, "??")
         self._nl(2)
 
-        self._tex += levels * "\\fi%"
+        self._tex += levels * "\\fi"
 
     def _macro_name(self, ind):
         """Returns the name of a relay macro.
