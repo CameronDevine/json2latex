@@ -158,13 +158,28 @@ class python2latex:
             ind (int): The index of the ouput macro to set.
             value (Union[str, int, float, bool]): The vale to set the macro to.
         """
-        self._tex += (
-            "\\def"
-            + self._out_macro_name(ind)
-            + "{"
-            + escape(str(value))
-            + "}%"
-        )
+        # Convert Python object to compact JSON string (no extra spaces)
+        compact_json = json.dumps(value, separators=(",", ":"))
+        compact_json = compact_json.replace(r'\"', '"')
+        print("compact json is ",compact_json)
+
+        # Split JSON by top-level commas for readability
+        # Note: this does not change actual JSON semantics
+        parts = escape(compact_json).split(",")
+
+        # Start macro
+        self._tex += "\\def" + self._out_macro_name(ind) + "{%"
+
+        # Add each part on a separate line with '%' to prevent TeX from
+        # introducing spaces
+        for i, part in enumerate(parts):
+            self._nl(indent=2)
+            self._tex += part
+            if i < len(parts) - 1:
+                self._tex += ",%"
+
+        # Close macro
+        self._tex += "}%"
 
     def _let_out(self, ind, relay):
         """Sets the output macro to reference another macro.
