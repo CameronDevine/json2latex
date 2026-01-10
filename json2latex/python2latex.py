@@ -169,6 +169,8 @@ class python2latex:
             self._nl(indent=2)
             self._tex += escape(part)
             if i < len(parts) - 1:
+                if part.endswith(","):
+                    self._tex += " "
                 self._tex += "%"
 
         # Close macro
