@@ -1,4 +1,4 @@
-import unittest, json
+import unittest, json, re
 
 
 class TestOutput(unittest.TestCase):
@@ -30,6 +30,7 @@ class TestOutput(unittest.TestCase):
                             obj = obj[el]
                 if isinstance(obj, (list, dict)):
                     self.assertEqual(json.loads(out), obj)
+                    self.assertIsNone(re.search(",[^ ]", out), "At least one comma not followed by a space!")
                 else:
                     self.assertEqual(str(obj), out)
                 print(f"Tested attribute '{attr}' successfully.")
