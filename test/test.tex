@@ -2,35 +2,34 @@
 
 \usepackage[margin=1in]{geometry}
 
-\input{out.tex}
-
 \pagestyle{empty}
 
 \begin{document}
 
 \small
 \noindent
-.: \data\\
-.foo: \data[foo]\\
-.foo.0: \data[foo][0]\\
-.foo.1: \data[foo][1]\\
-x: \data[foo][2]\\
-.bar: \data[bar]\\
-.baz: \data[baz]\\
-.blah: \data[blah]\\
-.blah.0: \data[blah][0]\\
-.blah.0.a: \data[blah][0][a]\\
-.blah.0.test: \data[blah][0][test]\\
-x: \data[blah][0][not]\\
-.blah.1: \data[blah][1]\\
-.blah.1.c: \data[blah][1][c]\\
-.blah.1.g: \data[blah][1][g]\\
-.blah.1.g.0: \data[blah][1][g][0]\\
-.blah.1.g.1: \data[blah][1][g][1]\\
-.blah.1.g.2: \data[blah][1][g][2]\\
-x: \data[blah][1][g][3]\\
-x: \data[blah][1][not]\\
-x: \data[blah][2]\\
-x: \data[not]
+start\input{out.tex}end\\
+.:\data!\\
+.foo:\data[foo]!\\
+.foo.0:\data[foo][0]!\\
+.foo.1:\data[foo][1]!\\
+x:\data[foo][2]!\\
+.bar:\data[bar]!\\
+.baz:\data[baz]!\\
+.blah:\data[blah]!\\
+.blah.0:\data[blah][0]!\\
+.blah.0.a:\data[blah][0][a]!\\
+.blah.0.test:\data[blah][0][test]!\\
+x:\data[blah][0][not]!\\
+.blah.1:\data[blah][1]!\\
+.blah.1.c:\data[blah][1][c]!\\
+.blah.1.g:\data[blah][1][g]!\\
+.blah.1.g.0:\data[blah][1][g][0]!\\
+.blah.1.g.1:\data[blah][1][g][1]!\\
+.blah.1.g.2:\data[blah][1][g][2]!\\
+x:\data[blah][1][g][3]!\\
+x:\data[blah][1][not]!\\
+x:\data[blah][2]!\\
+x:\data[not]!
 
 \end{document}

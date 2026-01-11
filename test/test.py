@@ -14,9 +14,16 @@ class TestOutput(unittest.TestCase):
             if not line:
                 continue
 
+            if line.startswith("start"):
+                self.assertEqual(line, "startend")
+                continue
+
             attr, _, remainder = line.replace("”", '"').partition(":")
             attr = attr.strip()
-            out = remainder.strip()
+            out = remainder.strip().strip("!")
+
+            self.assertFalse(out.startswith(" "))
+            self.assertFalse(out.endswith(" "))
 
             if attr == "x":
                 self.assertEqual(out, "??")
