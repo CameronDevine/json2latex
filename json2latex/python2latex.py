@@ -43,12 +43,12 @@ class python2latex:
         Args:
             obj (dict or list): The Python object to make accessible in LaTeX.
         """
-        self._tex += "\\makeatletter\n"
+        self._tex += "\\makeatletter%\n"
         self._to_convert = {0: obj}
         self._index = 1
         while len(self._to_convert):
             self._convert()
-        self._tex += "\n\\makeatother"
+        self._tex += "%\n\\makeatother%"
 
     def _nl(self, indent=0):
         """Add newline.
